@@ -1,12 +1,24 @@
 package com.example.productorderservice.product;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
-class Product {
-    private final String name;
-    private final int price;
-    private final DiscountPolicy discountPolicy;
+import javax.persistence.*;
+
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "products")
+@Entity
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private int price;
+    private DiscountPolicy discountPolicy;
 
     public Product(final String name, final int price, final DiscountPolicy discountPolicy) {
         Assert.hasText(name, "상품명은 필수입니다.");
@@ -19,11 +31,5 @@ class Product {
 
     }
 
-    public void assignId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }
+
